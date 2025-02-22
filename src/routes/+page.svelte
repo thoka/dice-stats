@@ -24,10 +24,8 @@
   }
 
   let set = grime
-
   
 </script>
-
 
 <main>
   <h1>Intransitive Würfel ({set.name})</h1>  

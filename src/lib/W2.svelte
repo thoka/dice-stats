@@ -56,10 +56,6 @@
             </bar>
         {/each}
     </bars>
-        <!-- <span style="background:{A.color}; width:{percentages[0]}%;"><b>{counts[0]}</b> ({percentages[0]}%)</span>
-        <span style="background:white; width:{percentages[1]}%;">({percentages[1]}%)</span>
-        <span style="background:{B.color}; width:{percentages[2]}%;">{percentages[2]}%</span> >
-    </bars> -->
 </main>
 
 <style>
@@ -70,8 +66,6 @@
     padding: 10px;
   }
   bar {
-    /* display: flex; */
-    /* justify-content: center; */
     align-items: center;
     color: black;
     padding: 5px;
