@@ -41,9 +41,8 @@
 </script>
 
 <main>
-  <h1>Intransitive Würfel</h1>
+  <h1>Hier treten die Grimeschen intransitiven Würfel gegeneinander an ...</h1>
   <DiceStats dices={grime}></DiceStats>
-  <DiceStats dices={efron}></DiceStats>
 </main>
 
 <style>

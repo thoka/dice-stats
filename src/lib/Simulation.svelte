@@ -2,14 +2,6 @@
     import { onMount } from "svelte";
     import * as d3 from "d3";
 
-    function generateRandomData(numPoints) {
-        const data = [];
-        for (let i = 0; i < numPoints; i++) {
-            data.push([i, Math.floor(Math.random() * 101)]);
-        }
-        return data;
-    }
-
     let data = [];
     
     let count = 0;
@@ -17,6 +9,34 @@
     export let A= { name: "Rot",  sides: "444449", color: "red" }
     export let B= { name: "Gelb", sides: "333388", color: "yellow" }
 
+    let counts = [0,0,0]
+    let Af = A.sides.split("");
+    let Bf = B.sides.split("");
+
+    for (let i = 0; i < Af.length; i++) {
+        let row = []
+        for (let j = 0; j < Bf.length; j++) {
+            if (Af[i] > Bf[j]) {
+                counts[2]++
+            } else if (Af[i] < Bf[j] ) {
+                counts[0]++
+            } else {
+                counts[1]++
+            }
+        }
+    }
+
+    let sum = (counts[0] + counts[1] + counts[2])
+    let percentages = counts.map(c => Math.round(c / sum * 1000)/10)
+    let summed = 0;
+    let summed_percentages = []
+    for (let i = 0; i < percentages.length; i++) {
+        summed += percentages[i]
+        summed_percentages.push(summed)
+    }
+
+    let m = summed_percentages[1]
+    
     function choose(from) {
         let sides = from.sides;
         let side = sides[Math.floor(Math.random() * sides.length)];
@@ -37,18 +57,31 @@
        return  [++count, counters[1]*100/count] ;
     }
 
+    let last_draw = 0;
     function updateData() {
-        if (data.length > 2000) {
+        if (data.length > 50000) {
             data = [];
             count = 0;
             counters = [0,0,0]
         }
+        let n = 1;
 
-        data.push(generateDataPoint());
-        // if (data.length > 100) data.shift(); // Begrenzung der Anzahl der Punkte
+        if (count > 100) n = 5;
+        if (count > 1000) n = 10;
+        if (count > 2000) n = 20;
+        if (count > 4000) n = 40;
+        if (count > 8000) n = 80;
+        if (count > 16000) n = 160;
+
+        for (let i = 0; i < n; i++) {
+            data.push(generateDataPoint())
+        }
+
         setTimeout(updateData, 20); // Verzögerung von 1 Sekunde
-        if (count < 100 || count % 20 == 0)
+        if (count < 500 || last_draw + (10*n) < count) {
+            last_draw = count;
             drawChart();
+        }
     }
 
     export let width = 600;
@@ -61,8 +94,7 @@
     let drawChart = () => {
         if (drawing) return;
         drawing++;
-        if (data.length === 0) return;
-  
+
         const margin = { top: 20, right: 30, bottom: 30, left: 50 };
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
@@ -109,30 +141,45 @@
             .attr("stroke-width", 3)
             .attr("d", line);
 
-         let bar_enter =    
-         g.selectAll("mybar")
-            .data(data)
-            .enter()
-    
-        bar_enter
-            .append("rect")
-            .attr("x", (d) => x(d[0]) )
-            .attr("y", (d) => y(d[1]) ) 
-            .attr("width", x(1.5)-x(0) )
-            .attr("height", (d) => Math.abs(y(d[1])-y(0)) )
+  
+        let points = [ ["M",x(0),y(0)] ]
+        
+        for (let i = 0; i < data.length; i++) {
+            points.push( ["L",x(data[i][0]-1), y(data[i][1])] )
+            points.push( ["L",x(data[i][0]), y(data[i][1])] )
+        }
+
+        points = points.concat ( [ [ "L", points[points.length-1][1] , y(0) ]]  )
+
+        points = points.map( (d) => `${d[0]}${d[1].toFixed(2)} ${d[2].toFixed(2)}`).join(' ') + " Z" 
+
+
+        g
+            .append("path")
+            .attr("d", points )
+            .attr("fill", B.color) 
+
+
+        points = [ ["M",x(0),y(100)] ]
+        
+        for (let i = 0; i < data.length; i++) {
+            points.push( ["L",x(data[i][0]-1), y(data[i][1])] )
+            points.push( ["L",x(data[i][0]), y(data[i][1])] )
+        }
+
+        points = points.concat ( [ [ "L", points[points.length-1][1] , y(100) ]]  )
+
+        points = points.map( (d) => `${d[0]}${d[1].toFixed(2)} ${d[2].toFixed(2)}`).join(' ') + " Z" 
+
+        g
+            .append("path")
+            .attr("d", points )
             .attr("fill", A.color) 
-        bar_enter
-            .append("rect")
-            .attr("x", (d) => x(d[0]) )
-            .attr("y", (d) => y(100) ) 
-            .attr("width", x(1.5)-x(0) )
-            .attr("height", (d) => Math.abs(y(100)-y(d[1]) ) )
-            .attr("fill", B.color)
 
 
-        if (0) {
-            const m = 25;    
-            const expected = d3.line()([[x(1),y(m)], [xmax, y(m)]])
+        if (1) {
+ 
+            const expected = d3.line()([[x(1),y(m)], [x(xmax), y(m)]])
 
             g.append("path")
                 .attr("fill", "none")

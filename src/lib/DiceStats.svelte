@@ -27,7 +27,7 @@
   <div class="grid">
     {#each all_combinations(set.dices,) as [diceA, diceB]}
       <div class="grid2">
-        <W2 A={diceA} B={diceB}></W2> <Simulation A={diceA} B={diceB}></Simulation>
+        <W2 A={diceA} B={diceB}></W2> <Simulation A={diceA} B={diceB} width=400></Simulation>
       </div>
     {/each}
   </div>
@@ -35,9 +35,11 @@
 </main>
 
 <style>
+  h2 { display: none}
+
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
     gap: 20px;
   }
 
@@ -48,7 +50,7 @@
 
   .grid2 {
     display: grid;
-    grid-template-columns: 200px 300px;
+    grid-template-columns: 180px 400px;
   }
 
 </style>
