@@ -37,18 +37,13 @@
       { name: "Blau", sides: "222777", color: "blue" },
       { name: "Olive", sides: "055555", color: "green" }
     ]}
-
   
 </script>
 
 <main>
   <h1>Intransitive Würfel</h1>
-
   <DiceStats dices={grime}></DiceStats>
-  <DiceStats dices={grime3}></DiceStats>
   <DiceStats dices={efron}></DiceStats>
-
-
 </main>
 
 <style>

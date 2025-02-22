@@ -3,6 +3,7 @@
 
 
   import W2 from "$lib/W2.svelte";
+	import Simulation from "./Simulation.svelte";
 
 
 
@@ -25,7 +26,9 @@
 
   <div class="grid">
     {#each all_combinations(set.dices,) as [diceA, diceB]}
-      <W2 A={diceA} B={diceB}></W2>
+      <div class="grid2">
+        <W2 A={diceA} B={diceB}></W2> <Simulation A={diceA} B={diceB}></Simulation>
+      </div>
     {/each}
   </div>
 
@@ -34,13 +37,18 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
     gap: 20px;
   }
 
   main {
     text-align: center;
     padding: 20px;
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: 200px 300px;
   }
 
 </style>
