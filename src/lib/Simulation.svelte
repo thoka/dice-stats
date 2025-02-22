@@ -129,7 +129,7 @@
 
         g.append("g")
             .attr("transform", `translate(0,${innerHeight})`)
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).ticks(5));
 
         g.append("g").call(d3.axisLeft(y));
 
