@@ -47,7 +47,7 @@
   <DiceStats dices={grime}></DiceStats>
   <DiceStats dices={grime3}></DiceStats>
   <DiceStats dices={efron}></DiceStats>
-  <DiceStats dices={grime35}></DiceStats>
+
 
 </main>
 
