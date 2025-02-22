@@ -17,9 +17,9 @@
     for (let i = 0; i < Af.length; i++) {
         let row = []
         rowLabels.push(Af[i])
-        rowHeights.push("30px")
+        rowHeights.push("20px")
         colLabels.push(Bf[i])
-        colWidths.push("30px")
+        colWidths.push("20px")
     
         for (let j = 0; j < Bf.length; j++) {
             if (Af[i] > Bf[j]) {
@@ -42,6 +42,7 @@
 </script>
 
 <main>
+    <div class="matrix">
     <Matrix
         data={matrixColors}
         rowLabels={rowLabels}
@@ -49,6 +50,7 @@
         rowHeights={rowHeights}
         colWidths={colWidths}
     />
+    </div>
     <bars style="width:100%; display:flex;">	
         {#each counts as count, i}
             <bar style="background:{i == 0 ? A.color : i == 1 ? "white" : B.color}; width:{percentages[i]}%;">
@@ -59,6 +61,9 @@
 </main>
 
 <style>
+    .matrix {
+      padding-top: 20px;
+    }
     bars {
         display: flex;
         justify-content: space-between;
