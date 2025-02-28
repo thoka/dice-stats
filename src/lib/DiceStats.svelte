@@ -1,33 +1,28 @@
 <script>
-  export let dices = {};
-
+  export let set = {};
 
   import W2 from "$lib/W2.svelte";
 	import Simulation from "./Simulation.svelte";
 
-
-
-  let all_combinations = (dices) => {
+  let all_combinations = (dice) => {
     let result = []
-    for (let i = 0; i < dices.length; i++) {
-      for (let j = i + 1; j < dices.length; j++) {
-        result.push([dices[i], dices[j]])
+    for (let i = 0; i < dice.length; i++) {
+      for (let j = i + 1; j < dice.length; j++) {
+        result.push([dice[i], dice[j]])
       }
     }
     return result
   }
 
-  let set = dices
-  
 </script>
 
 <main>
   <h2>Set: {set.name}</h2>  
 
   <div class="grid">
-    {#each all_combinations(set.dices,) as [diceA, diceB]}
+    {#each all_combinations(set.dice,) as [dieA, dieB]}
       <div class="grid2">
-        <W2 A={diceA} B={diceB}></W2> <Simulation A={diceA} B={diceB} width=500></Simulation>
+        <W2 A={dieA} B={dieB}></W2> <Simulation A={dieA} B={dieB} width=500></Simulation>
       </div>
     {/each}
   </div>

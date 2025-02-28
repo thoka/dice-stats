@@ -3,7 +3,7 @@
 	import DiceStats from "$lib/DiceStats.svelte";
 
   let grime = 
-    { name: "Grime", dices: [
+    { name: "Grime", dice: [
       { name: "Rot",  sides: "444449", color: "red" },
       { name: "Gelb", sides: "333388", color: "yellow" },
       { name: "Magenta", sides: "116666", color: "magenta" },
@@ -12,14 +12,14 @@
     ]}
 
     let grime3 = 
-    { name: "Grime3", dices: [
+    { name: "Grime3", dice: [
       { name: "Rot",   sides: "333336", color: "red" },
       { name: "Blau",  sides: "222555", color: "blue" },
       { name: "Olive", sides: "144444", color: "green" },
     ]}
 
     let efron = 
-    { name: "Efron", dices: [
+    { name: "Efron", dice: [
       { name: "Blau",    sides: "333333", color: "blue" },
       { name: "Magenta", sides: "222266", color: "magenta" },
       { name: "Olive",   sides: "111555", color: "green" },
@@ -27,7 +27,7 @@
     ]}
 
     let grime35 = 
-    { name: "Grime3+Grime5", dices: [
+    { name: "Grime3+Grime5", dice: [
       { name: "3Rot",   sides: "333336", color: "#f77" },
       { name: "3Blau",  sides: "222555", color: "#77f" },
       { name: "3Olive", sides: "144444", color: "lightgreen" },
@@ -38,17 +38,18 @@
       { name: "Olive", sides: "055555", color: "green" }
     ]}
   
+    let set = efron;
+
 </script>
 
 <main>
-  <h1>Hier treten die Grimeschen intransitiven Würfel gegeneinander an ...</h1>
-  <DiceStats dices={grime}></DiceStats>
+  <h1>Hier treten die {set.name}'schen intransitiven Würfel gegeneinander an ...</h1>
+  <DiceStats set={set}></DiceStats>
 </main>
 
 <style>
   main {
     text-align: center;
-    
   }
 
   h1 {
